@@ -1,29 +1,30 @@
 
+<!-- /resources/views/projects/index.blade.php -->
+
 @extends('layouts.master')
-
-@section('title', 'Page Title')
-
-@section('sidebar')
-    @parent
-
-    <p>This is appended to the master sidebar.</p>
-@stop
-
+ 
 @section('content')
     <h2>Projects</h2>
- <?php 
- // echo '<pre>';  
- // print_r($projects[0]->slug);
- // die;
  
- ?>
     @if ( !$projects->count() )
         You have no projects
     @else
         <ul>
             @foreach( $projects as $project )
-                <li><a href="{{ route('projects.show', $project->slug) }}">{{ $project->name }}</a></li>
+                <li>
+                    {!! Form::open(array('class' => 'form-inline', 'method' => 'DELETE', 'route' => array('projects.destroy', $project->slug))) !!}
+                        <a href="{{ route('projects.show', $project->slug) }}">{{ $project->name }}</a>
+                        (
+                            {!! link_to_route('projects.edit', 'Edit', array($project->slug), array('class' => 'btn btn-info')) !!},
+                            {!! Form::submit('Delete', array('class' => 'btn btn-danger')) !!}
+                        )
+                    {!! Form::close() !!}
+                </li>
             @endforeach
         </ul>
     @endif
-@stop
+ 
+    <p>
+        {!! link_to_route('projects.create', 'Create Project') !!}
+    </p>
+@endsection

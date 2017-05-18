@@ -1,13 +1,11 @@
 @extends('layouts.master')
 
-@section('title', 'Page Title')
-
-@section('sidebar')
-    @parent
-
-    <p>This is appended to the master sidebar.</p>
-@stop
-
 @section('content')
-    <p>This is my /resources/views/projects/create.blade.php file!</p>
-@stop
+    <h2>Create Project</h2>
+ 
+    {!! Form::model(new App\Project, ['route' => ['projects.store']]) !!}
+        @include('projects/partials/_form', ['submit_text' => 'Create Project'])
+    {!! Form::close() !!}
+@endsection
+ 
+
